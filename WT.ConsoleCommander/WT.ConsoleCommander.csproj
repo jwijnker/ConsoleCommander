@@ -2,6 +2,14 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <LangVersion>latest</LangVersion>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Authors>Jim Wijnker</Authors>
+    <Company />
+    <Product>ConsoleCommander</Product>
+    <Description>CommandLine tooling to access components anywhere in your solution.</Description>
+    <PackageTags>Commander, Console</PackageTags>
+    <PackageLicenseExpression></PackageLicenseExpression>
   </PropertyGroup>
 
   <ItemGroup>
