@@ -6,6 +6,15 @@ namespace WT.ConsoleCommander
 {
     public static class CommanderRequestExtensions
     {
+        /// <summary>
+        /// Asks the user for input. The user can see the options to pick from, and a default value is suggested.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="commander"></param>
+        /// <param name="message"></param>
+        /// <param name="defaultValue"></param>
+        /// <param name="options"></param>
+        /// <returns></returns>
         public static int requestValue<T>(this CommanderBase commander, string message, T defaultValue, IEnumerable<int> options = null)
         {
             string sval = string.Empty;
