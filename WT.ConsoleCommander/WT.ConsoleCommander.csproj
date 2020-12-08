@@ -7,11 +7,15 @@
     <Authors>J.Wijnker</Authors>
     <Company />
     <Product>ConsoleCommander</Product>
-    <Description>CommandLine tooling to access components anywhere in your solution.</Description>
-    <PackageTags>Commander, Console</PackageTags>
+    <Description>CommandLine tooling to access components anywhere in your solution.
+Simple requests user input (with defaults) or pick from list.
+Write results with colors formatted (in a list or table) in a console window.
+Logging is writting to console.</Description>
+    <PackageTags>ConsoleCommander, Commander, Console, Color, Logging</PackageTags>
     <PackageLicenseExpression></PackageLicenseExpression>
-    <Version>1.0.3</Version>
-    <PackageId>ConsoleCommander</PackageId>
+    <Version>1.0.4</Version>
+    <PackageId>WT.ConsoleCommander</PackageId>
+    <PackageReleaseNotes></PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>
