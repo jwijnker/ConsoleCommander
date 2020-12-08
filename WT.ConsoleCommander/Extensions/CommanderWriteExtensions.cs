@@ -8,32 +8,32 @@ namespace WT.ConsoleCommander
     {
         public static void Info(this CommanderBase commander, string message)
         {
-            commander.Write(message, ConsoleColor.Cyan);
+            commander.WriteLine(message, ConsoleColor.Cyan);
         }
 
         public static void Verbose(this CommanderBase commander, string message)
         {
-            commander.Write(message, ConsoleColor.Magenta);
+            commander.WriteLine(message, ConsoleColor.Magenta);
         }
 
         public static void Debug(this CommanderBase commander, string message)
         {
-            commander.Write(message, ConsoleColor.White);
+            commander.WriteLine(message, ConsoleColor.White);
         }
 
         public static void Warning(this CommanderBase commander, string message)
         {
-            commander.Write(message, ConsoleColor.Yellow);
+            commander.WriteLine(message, ConsoleColor.Yellow);
         }
 
         public static void Error(this CommanderBase commander, string message)
         {
-            commander.Write(message, ConsoleColor.Red);
+            commander.WriteLine(message, ConsoleColor.Red);
         }
 
         public static void Write(this CommanderBase commander, int message, ConsoleColor color = ConsoleColor.Gray)
         {
-            commander.Write(message.ToString(), color);
+            commander.WriteLine(message.ToString(), color);
         }
 
         public static void WriteEmptyLine(this CommanderBase commander)
@@ -54,11 +54,11 @@ namespace WT.ConsoleCommander
             {
                 if (writeFormat == null)
                 {
-                    commander.Write(i.ToString());
+                    commander.WriteLine(i.ToString());
                 }
                 else
                 {
-                    commander.Write(writeFormat(i));
+                    commander.WriteLine(writeFormat(i));
                 }
             }
 
@@ -122,9 +122,9 @@ namespace WT.ConsoleCommander
                         : result.ToString()
                             .Replace(Environment.NewLine, string.Empty);
 
-                    Console.Write($"| {value.ToString().PadRight(lenDict[c.Key])} ");
+                    commander.Write($"| {value.ToString().PadRight(lenDict[c.Key])} ");
                 }
-                Console.WriteLine($"|");
+                commander.WriteLine($"|");
             }
 
             // Footer
