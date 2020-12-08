@@ -16,6 +16,14 @@ namespace WT.ConsoleCommander
         }
     }
 
+    /// <summary>
+    /// Base class for all commanders.
+    /// This base class contains all basic logic to:
+    /// - Run a commander.
+    /// - Register commands.
+    /// - Easily connect a command to an other commander.
+    /// - Write messages.
+    /// </summary>
     public abstract class CommanderBase
     {
         #region Properties
@@ -30,7 +38,7 @@ namespace WT.ConsoleCommander
 
         protected event EventHandler OnStart;
         protected event EventHandler OnClose;
-        //protected event EventHandler<UnhandledExceptionEventArgs> OnError;
+        protected event EventHandler<UnhandledExceptionEventArgs> OnError;
 
         protected virtual void OnStarted(object sender, EventArgs eventArgs)
         {
@@ -43,7 +51,7 @@ namespace WT.ConsoleCommander
             Write($"Closing {this.GetType().Name}.", ConsoleColor.Magenta);
         }
 
-        protected virtual void OnError(object sender, UnhandledExceptionEventArgs eventArgs)
+        protected virtual void OnErrorCaught(object sender, UnhandledExceptionEventArgs eventArgs)
         {
             Write(((Exception)eventArgs.ExceptionObject).Message, ConsoleColor.Red);
         }
@@ -57,6 +65,7 @@ namespace WT.ConsoleCommander
             // Set the default event handlers
             this.OnStart += OnStarted;
             this.OnClose += OnClosed;
+            this.OnError += OnErrorCaught;
 
             registerCommand("q", "Quit", this.QuitCommander, true);
             registerCommand("clear", "Clear Screen", this.ClearScreen, true);
@@ -143,6 +152,14 @@ namespace WT.ConsoleCommander
 
         public void Write(string message, ConsoleColor color = ConsoleColor.Gray)
         {
+            Console.ForegroundColor = color;
+            Console.WriteLine(message);
+            Console.ResetColor();
+        }
+
+        public void WriteLine(string message, ConsoleColor color = ConsoleColor.Gray, ConsoleColor backgroundColor = ConsoleColor.Black)
+        {
+            Console.BackgroundColor = backgroundColor;
             Console.ForegroundColor = color;
             Console.WriteLine(message);
             Console.ResetColor();
