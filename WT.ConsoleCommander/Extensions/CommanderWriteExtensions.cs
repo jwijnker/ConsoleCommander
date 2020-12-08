@@ -6,6 +6,14 @@ namespace WT.ConsoleCommander
 {
     public static class CommanderWriteExtensions
     {
+        //
+        // Logging-like write methods.
+        //
+        public static void Trace(this CommanderBase commander, string message)
+        {
+            commander.WriteLine(message, ConsoleColor.Blue);
+        }
+
         public static void Info(this CommanderBase commander, string message)
         {
             commander.WriteLine(message, ConsoleColor.Cyan);
@@ -36,9 +44,26 @@ namespace WT.ConsoleCommander
             commander.WriteLine(message.ToString(), color);
         }
 
+        //
+        // (Un-)Succesfull writers
+        //
+        public static void Success(this CommanderBase commander, string message)
+        {
+            commander.WriteLine(message, ConsoleColor.Green);
+        }
+
+        public static void Failed(this CommanderBase commander, string message)
+        {
+            commander.WriteLine(message, ConsoleColor.Red);
+        }
+
+        //
+        // Specifics
+        //
+
         public static void WriteEmptyLine(this CommanderBase commander)
         {
-            Console.WriteLine();
+            commander.WriteLine(string.Empty);
         }
 
         /// <summary>
