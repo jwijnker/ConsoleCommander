@@ -4,12 +4,14 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <LangVersion>latest</LangVersion>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Authors>Jim Wijnker</Authors>
+    <Authors>J.Wijnker</Authors>
     <Company />
     <Product>ConsoleCommander</Product>
     <Description>CommandLine tooling to access components anywhere in your solution.</Description>
     <PackageTags>Commander, Console</PackageTags>
     <PackageLicenseExpression></PackageLicenseExpression>
+    <Version>1.0.3</Version>
+    <PackageId>ConsoleCommander</PackageId>
   </PropertyGroup>
 
   <ItemGroup>
