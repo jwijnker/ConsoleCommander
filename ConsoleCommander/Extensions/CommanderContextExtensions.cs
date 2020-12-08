@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace WT.ConsoleCommander.Extensions
+namespace ConsoleCommander.Extensions
 {
     public static class CommanderContextExtensions
     {

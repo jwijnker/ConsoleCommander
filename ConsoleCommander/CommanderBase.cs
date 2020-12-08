@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 
-namespace WT.ConsoleCommander
+namespace ConsoleCommander
 {
+    [DebuggerStepThrough]
     public abstract class CommanderBase<T> : CommanderBase
     {
         protected T DataProvider;
@@ -24,6 +25,7 @@ namespace WT.ConsoleCommander
     /// - Easily connect a command to an other commander.
     /// - Write messages.
     /// </summary>
+    [DebuggerStepThrough]
     public abstract class CommanderBase
     {
         #region Properties

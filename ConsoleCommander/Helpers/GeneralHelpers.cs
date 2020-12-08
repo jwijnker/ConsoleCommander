@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Globalization;
 
-namespace WT.ConsoleCommander
+namespace ConsoleCommander
 {
     public static class GeneralHelpers
     {

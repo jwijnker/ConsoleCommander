@@ -1,11 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28307.168
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30717.126
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core Console", "Core Console\Core Console.csproj", "{EAF6A2E3-AD8C-4A11-A72E-44827384AB6A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WT.ConsoleCommander", "WT.ConsoleCommander\WT.ConsoleCommander.csproj", "{9D710D80-E806-4A7B-8A54-E096D3969208}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleCommander", "ConsoleCommander\ConsoleCommander.csproj", "{9D710D80-E806-4A7B-8A54-E096D3969208}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

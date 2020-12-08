@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
@@ -13,8 +13,8 @@ Write results with colors formatted (in a list or table) in a console window.
 Logging is writting to console.</Description>
     <PackageTags>ConsoleCommander, Commander, Console, Color, Logging</PackageTags>
     <PackageLicenseExpression></PackageLicenseExpression>
-    <Version>1.0.4</Version>
-    <PackageId>WT.ConsoleCommander</PackageId>
+    <Version>1.0.5</Version>
+    <PackageId>ConsoleCommander</PackageId>
     <PackageReleaseNotes></PackageReleaseNotes>
   </PropertyGroup>
 

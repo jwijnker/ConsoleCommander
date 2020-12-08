@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics;
 using System.Threading.Tasks;
 
-namespace WT.ConsoleCommander.Helpers
+namespace ConsoleCommander.Helpers
 {
     [DebuggerStepThrough]
     public static class AsyncHelper

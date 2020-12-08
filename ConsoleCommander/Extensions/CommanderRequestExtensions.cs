@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace WT.ConsoleCommander
+namespace ConsoleCommander
 {
     public static class CommanderRequestExtensions
     {
