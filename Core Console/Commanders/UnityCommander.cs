@@ -3,7 +3,7 @@ using System.Linq;
 using Unity;
 using Unity.RegistrationByConvention;
 
-namespace WT.ConsoleCommander.Commanders
+namespace ConsoleCommander.Commanders
 {
     public class UnityCommander : CommanderBase<IUnityContainer>
     {

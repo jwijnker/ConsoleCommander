@@ -7,8 +7,8 @@ using System;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
-using WT.ConsoleCommander;
-using WT.ConsoleCommander.Commanders;
+using ConsoleCommander;
+using ConsoleCommander.Commanders;
 
 namespace Core_Console
 {
@@ -29,9 +29,10 @@ namespace Core_Console
                     // Set the services used.
                     services.AddHostedService(s => new Program(s));
 
-                    services.AddScoped<DiCommander>();
-                    services.AddScoped<UnityCommander>();
-                    services.AddScoped<CastleWindsorCommander>();
+                    services.AddTransient<DiCommander>();
+                    services.AddTransient<UnityCommander>();
+                    services.AddTransient<CastleWindsorCommander>();
+                    services.AddTransient<FilesystemCommander>();
                 })
                 .ConfigureLogging((hostingContext, logging) =>
                 {
@@ -77,6 +78,7 @@ namespace Core_Console
             registerCommand("1", "Dependency Injection (using .Net Core)", () => useCommander(serviceProvider.GetService<DiCommander>()));
             registerCommand("2", "Dependency Injection (using Unity)", () => useCommander(serviceProvider.GetService<UnityCommander>()));
             registerCommand("3", "Dependency Injection (using CastleWindsor)", () => useCommander(serviceProvider.GetService<CastleWindsorCommander>()));
+            registerCommand("4", "Filesystem commander", () => useCommander(serviceProvider.GetService<FilesystemCommander>()));
         }
        
     }

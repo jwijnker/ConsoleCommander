@@ -1,7 +1,7 @@
 ﻿using Castle.MicroKernel.Registration;
 using Castle.Windsor;
 using System;
-using WT.ConsoleCommander;
+using ConsoleCommander;
 
 namespace Sample_Console.Commanders
 {
