@@ -150,8 +150,9 @@ namespace WT.ConsoleCommander
 
         #region Writing messages
 
-        public void Write(string message, ConsoleColor color = ConsoleColor.Gray)
+        public void Write(string message, ConsoleColor color = ConsoleColor.Gray, ConsoleColor backgroundColor = ConsoleColor.Black)
         {
+            Console.BackgroundColor = backgroundColor;
             Console.ForegroundColor = color;
             Console.WriteLine(message);
             Console.ResetColor();
