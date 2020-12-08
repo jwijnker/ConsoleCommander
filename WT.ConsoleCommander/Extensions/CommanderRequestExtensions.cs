@@ -85,11 +85,11 @@ namespace WT.ConsoleCommander
             {
                 if (writeFormat == null)
                 {
-                    commander.Write($"[{idx}]: {i.ToString()}");
+                    commander.WriteLine($"[{idx}]: {i.ToString()}");
                 }
                 else
                 {
-                    commander.Write($"[{idx}]: {writeFormat(i)}");
+                    commander.WriteLine($"[{idx}]: {writeFormat(i)}");
                 }
 
                 idx++;
