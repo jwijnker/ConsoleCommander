@@ -48,12 +48,12 @@ namespace WT.ConsoleCommander
         protected virtual void OnClosed(object sender, EventArgs eventArgs)
         {
             this.OnClose(this, new EventArgs());
-            Write($"Closing {this.GetType().Name}.", ConsoleColor.Magenta);
+            WriteLine($"Closing {this.GetType().Name}.", ConsoleColor.Magenta);
         }
 
         protected virtual void OnErrorCaught(object sender, UnhandledExceptionEventArgs eventArgs)
         {
-            Write(((Exception)eventArgs.ExceptionObject).Message, ConsoleColor.Red);
+            WriteLine(((Exception)eventArgs.ExceptionObject).Message, ConsoleColor.Red);
         }
 
         #endregion
@@ -80,7 +80,7 @@ namespace WT.ConsoleCommander
             while (active)
             {
                 Console.Title = $"Commander '{this.GetType().Name}'.";
-                Write($"Current Commander '{this.GetType().Name}'.", ConsoleColor.DarkCyan);
+                WriteLine($"Current Commander '{this.GetType().Name}'.", ConsoleColor.DarkCyan);
 
                 #region Show commands available
 
@@ -95,7 +95,7 @@ namespace WT.ConsoleCommander
 
                 foreach (var k in commands.Where(c => c.Value.Item3).OrderBy(c => c.Key))
                 {
-                    Write($" '{k.Key}' : {k.Value.Item1}");
+                    WriteLine($" '{k.Key}' : {k.Value.Item1}");
                 }
                 Console.WriteLine();
 
@@ -122,7 +122,7 @@ namespace WT.ConsoleCommander
                 }
                 else
                 {
-                    Write($"'{command}' is no command", ConsoleColor.Yellow);
+                    WriteLine($"'{command}' is no command", ConsoleColor.Yellow);
                 }
             }
         }
@@ -154,7 +154,7 @@ namespace WT.ConsoleCommander
         {
             Console.BackgroundColor = backgroundColor;
             Console.ForegroundColor = color;
-            Console.WriteLine(message);
+            Console.Write(message);
             Console.ResetColor();
         }
 
