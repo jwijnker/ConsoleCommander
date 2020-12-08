@@ -98,5 +98,31 @@ namespace WT.ConsoleCommander
             var selectedItem = commander.requestValue(message, defaultIdx);
             return items.ElementAt(selectedItem);
         }
+
+        /// <summary>
+        /// Requests the user to choose a month number
+        /// </summary>
+        /// <param name="commander"></param>
+        /// <param name="defaultMonth">By default the current month</param>
+        /// <returns></returns>
+        public static int requestMonth(this CommanderBase commander, int defaultMonth = 0)
+        {
+            if (defaultMonth == 0)
+            {
+                defaultMonth = DateTime.Now.Month;
+            }
+            return commander.requestValue("Month:", defaultMonth, new[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 }.ToList());
+        }
+
+        public static bool requestBool(this CommanderBase commander, string message = "Yes or No?:", string trueText = "Yes", string falseText = "No", bool defaultValue = true)
+        {
+            var boolList = new Dictionary<string, bool>() {
+                { falseText, false},
+                { trueText, true}
+            };
+            var result = commander.requestItem(boolList.ToList(), kvp => $"{kvp.Value}", message, boolList.ToList().FindIndex(k => k.Value == defaultValue));
+
+            return result.Value;
+        }
     }
 }
