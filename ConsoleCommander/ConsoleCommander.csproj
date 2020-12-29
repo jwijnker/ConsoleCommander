@@ -13,9 +13,9 @@ Write results with colors formatted (in a list or table) in a console window.
 Logging is writting to console.</Description>
     <PackageTags>ConsoleCommander, Commander, Console, Color, Logging</PackageTags>
     <PackageLicenseExpression></PackageLicenseExpression>
-    <Version>1.0.5</Version>
+    <Version>1.0.6</Version>
     <PackageId>ConsoleCommander</PackageId>
-    <PackageReleaseNotes></PackageReleaseNotes>
+    <PackageReleaseNotes>Added DI method to register all commanders in the given assemblies.</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>

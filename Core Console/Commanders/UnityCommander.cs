@@ -1,9 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using ConsoleCommander;
+using System.Collections.Generic;
 using System.Linq;
 using Unity;
 using Unity.RegistrationByConvention;
 
-namespace ConsoleCommander.Commanders
+namespace Sample_Console.Commanders
 {
     public class UnityCommander : CommanderBase<IUnityContainer>
     {

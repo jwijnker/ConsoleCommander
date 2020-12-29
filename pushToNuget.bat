@@ -1,0 +1,1 @@
+dotnet nuget push ConsoleCommander\bin\Release\ConsoleCommander.1.0.6.nupkg --api-key oy2hl27xfwg5szbbaqmqh6aqic6ulecutihf6tltdsbjuq --source https://api.nuget.org/v3/index.json

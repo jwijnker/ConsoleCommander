@@ -7,6 +7,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core Console", "Core Consol
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleCommander", "ConsoleCommander\ConsoleCommander.csproj", "{9D710D80-E806-4A7B-8A54-E096D3969208}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8728E78F-1346-463F-9569-786CD98A0CBF}"
+	ProjectSection(SolutionItems) = preProject
+		pushToNuget.bat = pushToNuget.bat
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

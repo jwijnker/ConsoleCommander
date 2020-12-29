@@ -1,55 +1,64 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using ConsoleCommander.Extensions;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using Sample_Console.Commanders;
 using System;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
-using ConsoleCommander;
-using ConsoleCommander.Commanders;
+
 
 namespace Core_Console
 {
-    class Program : CommanderBase, IHostedService
+    class Program : IHostedService
     {
         public static void Main(string[] args)
         {
             var builder = new HostBuilder()
 
+                .ConfigureHostConfiguration(config => { 
+                    // Set the host configuration.
+                })
                 .ConfigureAppConfiguration((hostingContext, config) =>
                 {
                     config.SetBasePath(Directory.GetCurrentDirectory());
                     config.AddJsonFile("appsettings.json", true);
                     if (args != null) config.AddCommandLine(args);
                 })
-                .ConfigureServices((hostingContext, services) =>
-                {
-                    // Set the services used.
-                    services.AddHostedService(s => new Program(s));
-
-                    services.AddTransient<DiCommander>();
-                    services.AddTransient<UnityCommander>();
-                    services.AddTransient<CastleWindsorCommander>();
-                    services.AddTransient<FilesystemCommander>();
-                })
                 .ConfigureLogging((hostingContext, logging) =>
                 {
                     logging.AddConfiguration(hostingContext.Configuration);
                     logging.AddConsole();
-                });
+                })
+                .ConfigureServices((hostingContext, services) =>
+                {
+                    // Set the service to be hosted.
+                    services.AddHostedService(s => new Program(s));
 
-                builder.RunConsoleAsync();
+                    // Register commanders found in given assembly.
+                    services.AddCommanders(typeof(Program).Assembly);
+                })
+                ;
+
+            builder.RunConsoleAsync();
         }
-        
+
+        private IServiceProvider _serviceProvider;
+
+        public Program(IServiceProvider serviceProvider)
+        {
+            _serviceProvider = serviceProvider;
+        }
+
         #region Helpers
 
         public async Task StartAsync(CancellationToken cancellationToken)
         {
             try
             {
-                this.Run();
+                new MainCommander(_serviceProvider)
+                    .Run();
             }
             catch (Exception e)
             {
@@ -72,14 +81,5 @@ namespace Core_Console
         }
 
         #endregion
-
-        public Program(IServiceProvider serviceProvider)
-        {
-            registerCommand("1", "Dependency Injection (using .Net Core)", () => useCommander(serviceProvider.GetService<DiCommander>()));
-            registerCommand("2", "Dependency Injection (using Unity)", () => useCommander(serviceProvider.GetService<UnityCommander>()));
-            registerCommand("3", "Dependency Injection (using CastleWindsor)", () => useCommander(serviceProvider.GetService<CastleWindsorCommander>()));
-            registerCommand("4", "Filesystem commander", () => useCommander(serviceProvider.GetService<FilesystemCommander>()));
-        }
-       
     }
 }
