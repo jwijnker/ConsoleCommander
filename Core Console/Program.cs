@@ -59,6 +59,7 @@ namespace Core_Console
             {
                 new MainCommander(_serviceProvider)
                     .Run();
+                Console.ResetColor();
             }
             catch (Exception e)
             {

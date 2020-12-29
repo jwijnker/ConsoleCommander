@@ -25,7 +25,7 @@ namespace ConsoleCommander
             }
             else
             {
-                sval = commander.requestValue(message, defaultValue.ToString(), options.Select(v => v.ToString()));
+                sval = commander.requestValue(message, defaultValue.ToString(), options.Select(v => v.ToString()).ToList());
             }
 
             return int.Parse(sval);
@@ -37,18 +37,19 @@ namespace ConsoleCommander
 
             if (options != null)
             {
-                Console.Write($"{message} ({defaultValue.ToString()}) [{string.Join(", ", options.ToString())}]: ");
+                commander.Write($"{message} ({defaultValue.ToString()}) [{string.Join(", ", options)}]: ");
             }
             else if (defaultValue != null)
             {
-                Console.Write($"{message} ({defaultValue.ToString()}): ");
+                commander.Write($"{message} ({defaultValue.ToString()}): ");
             }
             else
             {
-                Console.Write($"{message}: ");
+                commander.Write($"{message}: ");
             }
 
-            var userVal = Console.ReadLine();
+            var userVal = commander.GetInput();
+
             if (string.IsNullOrEmpty(userVal))
             {
                 return defaultValue;
@@ -120,7 +121,7 @@ namespace ConsoleCommander
                 { falseText, false},
                 { trueText, true}
             };
-            var result = commander.requestItem(boolList.ToList(), kvp => $"{kvp.Value}", message, boolList.ToList().FindIndex(k => k.Value == defaultValue));
+            var result = commander.requestItem(boolList.ToList(), kvp => $"{kvp.Key}", message, boolList.ToList().FindIndex(k => k.Value == defaultValue));
 
             return result.Value;
         }

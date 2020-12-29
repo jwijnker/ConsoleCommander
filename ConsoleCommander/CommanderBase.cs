@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ConsoleCommander.Helpers;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -29,6 +30,8 @@ namespace ConsoleCommander
     public abstract class CommanderBase
     {
         #region Properties
+
+        protected IInteractionHelper interactionHelper;
 
         protected bool active = true;
 
@@ -62,12 +65,14 @@ namespace ConsoleCommander
 
         #region Constructor(s)
 
-        protected CommanderBase()
+        protected CommanderBase(IInteractionHelper interactionHelper = null)
         {
             // Set the default event handlers
             this.OnStart += OnStarted;
             this.OnClose += OnClosed;
             this.OnError += OnErrorCaught;
+
+            this.interactionHelper = interactionHelper ?? new ConsoleInteractionHelper();
 
             registerCommand("q", "Quit", this.QuitCommander, true);
             registerCommand("clear", "Clear Screen", this.ClearScreen, true);
@@ -81,30 +86,33 @@ namespace ConsoleCommander
 
             while (active)
             {
-                Console.Title = $"Commander '{this.GetType().Name}'.";
+                WriteLine(string.Empty);
+
+                interactionHelper.Title = $"Commander '{this.GetType().Name}'.";
                 WriteLine($"Current Commander '{this.GetType().Name}'.", ConsoleColor.DarkCyan);
 
                 #region Show commands available
 
-                Console.WriteLine($"Choose command to invoke: ");
-                Console.WriteLine();
+                WriteLine($"Choose command to invoke: ");
+                WriteLine(string.Empty);
 
                 foreach (var k in commands.Where(c => !c.Value.Item3).OrderBy(c => c.Key))
                 {
-                    Console.WriteLine($" '{k.Key}' : {k.Value.Item1}");
+                    WriteLine($" '{k.Key}' : {k.Value.Item1}");
                 }
-                Console.WriteLine();
+                WriteLine(string.Empty);
 
                 foreach (var k in commands.Where(c => c.Value.Item3).OrderBy(c => c.Key))
                 {
                     WriteLine($" '{k.Key}' : {k.Value.Item1}");
                 }
-                Console.WriteLine();
+                WriteLine(string.Empty);
 
                 #endregion
 
-                Console.Write("Command: ");
-                var command = Console.ReadLine().ToLower();
+                Write("Command: ");
+                var command = interactionHelper.ReadLine().ToLower();
+                WriteLine(string.Empty);
 
                 if (commands.ContainsKey(command))
                 {
@@ -141,7 +149,7 @@ namespace ConsoleCommander
 
         protected void ClearScreen()
         {
-            Console.Clear();
+            interactionHelper.Clear();
         }
 
         protected void QuitCommander()
@@ -154,21 +162,26 @@ namespace ConsoleCommander
 
         public void Write(string message, ConsoleColor color = ConsoleColor.Gray, ConsoleColor backgroundColor = ConsoleColor.Black)
         {
-            Console.BackgroundColor = backgroundColor;
-            Console.ForegroundColor = color;
-            Console.Write(message);
-            Console.ResetColor();
+            interactionHelper.BackgroundColor = backgroundColor;
+            interactionHelper.ForegroundColor = color;
+            interactionHelper.Write(message);
+            interactionHelper.ResetColor();
         }
 
         public void WriteLine(string message, ConsoleColor color = ConsoleColor.Gray, ConsoleColor backgroundColor = ConsoleColor.Black)
         {
-            Console.BackgroundColor = backgroundColor;
-            Console.ForegroundColor = color;
-            Console.WriteLine(message);
-            Console.ResetColor();
+            interactionHelper.BackgroundColor = backgroundColor;
+            interactionHelper.ForegroundColor = color;
+            interactionHelper.WriteLine(message);
+            interactionHelper.ResetColor();
         }
 
         #endregion
+
+        internal string GetInput()
+        {
+            return interactionHelper.ReadLine();
+        }
 
     }
 }

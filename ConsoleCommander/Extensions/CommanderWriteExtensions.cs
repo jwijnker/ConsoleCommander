@@ -88,7 +88,6 @@ namespace ConsoleCommander
             }
 
             commander.Info($"There are {items.Count()} items found.");
-            commander.WriteEmptyLine();
         }
 
         public static void WriteAsTable<T>(this CommanderBase commander, IEnumerable<T> items, IDictionary<string, Func<T, object>> columns, string nullReplacementValue = "NULL")
