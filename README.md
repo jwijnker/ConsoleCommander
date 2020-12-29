@@ -1,2 +1,144 @@
-# ConsoleCommander
-Basic components used to instruct components somewhere in your app.
+# ConsoleCommander	
+
+First, thanks for taking a look into ConsoleCommander.
+Finally there is some documentation about this cool tool.
+
+I decided to have a version of this tool on nuget after I used it for several projects in (E2E-, Integration-) testing, experimenting and maintenance (executing several tasks repeately) in different environments.
+
+# QuickStart
+ 1. Create a ConsoleApplication (.Net Core)
+ 2. Add a reference to '*ConsoleCommander*' (nuget-) package.
+ 3. Add a new class **MainCommander** and derive from **CommanderBase\<IServiceProvider\>**
+ 4. Add command-registration in constructor
+>		registerCommand("1", nameof(hello), hello);
+5. Create method 'Hello':
+>		private void hello()
+>		{
+>			var name = this.requestValue("Name", "YourName");
+>			this.Write($"Hello {name}");
+>		}
+
+6. Run the application, and press '1' to start command *hello()*.
+
+## Sample files
+### Program.cs
+
+    using CCQS;
+	using ConsoleCommander.Extensions;
+	using Microsoft.Extensions.Configuration;
+	using Microsoft.Extensions.DependencyInjection;
+	using Microsoft.Extensions.Hosting;
+	using Microsoft.Extensions.Logging;
+	using System;
+	using System.IO;
+	using System.Threading;
+	using System.Threading.Tasks;
+
+
+	namespace CCQS
+	{
+	    class Program : IHostedService
+	    {
+	        public static void Main(string[] args)
+	        {
+	            var builder = new HostBuilder()
+
+	                .ConfigureAppConfiguration((hostingContext, config) =>
+	                {
+	                    config.SetBasePath(Directory.GetCurrentDirectory());
+	                    config.AddJsonFile("appsettings.json", true);
+	                    if (args != null) config.AddCommandLine(args);
+	                })
+	                .ConfigureServices((hostingContext, services) =>
+	                {
+	                    // Set the services used.
+	                    services.AddHostedService(s => new Program(s));
+
+						services.AddCommanders(typeof(Program).Assembly);
+	                })
+	                .ConfigureLogging((hostingContext, logging) =>
+	                {
+	                    logging.AddConfiguration(hostingContext.Configuration);
+	                    logging.AddConsole();
+	                });
+
+	            builder.RunConsoleAsync();
+	        }
+
+
+	        private IServiceProvider _serviceProvider;
+
+	        public Program(IServiceProvider serviceProvider)
+	        {
+	            _serviceProvider = serviceProvider;
+	        }
+
+	        #region Helpers
+
+	        public async Task StartAsync(CancellationToken cancellationToken)
+	        {
+	            try
+	            {
+	                new MainCommander(_serviceProvider)
+	                    .Run();
+	            }
+	            catch (Exception e)
+	            {
+	                Console.ForegroundColor = ConsoleColor.Red;
+	                Console.WriteLine(e.Message);
+
+	                Console.ResetColor();
+	                Console.ReadLine();
+	            }
+	            finally
+	            {
+	                await this.StopAsync(cancellationToken);
+	            }
+	        }
+
+	        public async Task StopAsync(CancellationToken cancellationToken)
+	        {
+	            Console.WriteLine("Closing application");
+	            await Task.Delay(200);
+	        }
+
+	        #endregion
+	    }
+	}
+
+
+
+### MainCommander.cs
+	using ConsoleCommander;
+	using System;
+
+	namespace CCQS
+	{
+	    public class MainCommander : CommanderBase<IServiceProvider>
+	    {
+	        public MainCommander(IServiceProvider serviceProvider)
+	        {
+	            // Register command '1'
+	            registerCommand("1", "Simple 'Hello World' sample.", hello);
+	        }
+
+	        /// <summary>
+	        /// Simple example for using a commander requesting simple user input.
+	        /// </summary>
+	        private void hello()
+	        {
+	            // Request user input
+	            var name = this.requestValue("Name", "YourName");
+
+	            this.WriteLine($"Hello {name}");
+	            this.WriteEmptyLine();
+	        }
+	    }
+	}
+
+
+More information is about to come!
+
+In Version 1.0.6 registration of Commanders is simplified by using:
+> 	services.AddCommanders(typeof(Program).Assembly);
+
