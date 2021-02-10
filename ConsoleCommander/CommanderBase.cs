@@ -142,6 +142,17 @@ namespace ConsoleCommander
             commands.Add(command, new Tuple<string, Action, bool>(description, action, systemCommand));
         }
 
+        /// <summary>
+        /// Define the commander to use.
+        /// </summary>
+        /// <typeparam name="TCommander"></typeparam>
+        /// <param name="serviceProvider"></param>
+        protected void useCommander<TCommander>(IServiceProvider serviceProvider) where TCommander : CommanderBase
+        {
+            var commander = (CommanderBase)serviceProvider.GetService(typeof(TCommander));
+            useCommander(commander);
+        }
+
         protected void useCommander(CommanderBase commanderToUse)
         {
             commanderToUse.Run();
