@@ -112,7 +112,7 @@ namespace ConsoleCommander
                 }
 
                 // Check if there are any numeric commands.
-                if (commands.Any(c => !Int32.TryParse(c.Key, out _)))
+                if (!commands.Any(c => Int32.TryParse(c.Key, out _)))
                 {
                     // Textual commands
                     foreach (var k in commands.Where(c => !c.Value.Item3).Where(c => !Int32.TryParse(c.Key, out _)).OrderBy(c => c.Key))
