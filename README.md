@@ -106,7 +106,29 @@ I decided to have a version of this tool on nuget after I used it for several pr
 	    }
 	}
 
+### MainCommander.cs (Short version without samples, version with samples is shown below.)
+	using ConsoleCommander;
+	using System;
 
+	namespace CCQS
+	{
+	    public class MainCommander : CommanderBase<IServiceProvider>
+	    {
+		public MainCommander(IServiceProvider serviceProvider)
+		    : base(serviceProvider)
+		{
+		    registerCommand("0", "Simple 'Hello World' sample", hello);
+		}
+
+		private void hello()
+		{
+		    // Request the user to provide its name, (with default value 'World'.	
+		    var name = this.requestValue("Name", "World");
+
+		    this.WriteLine($"Hello {name}");
+		}
+	    }
+	}
 
 ### MainCommander.cs
 	using ConsoleCommander;
@@ -168,6 +190,7 @@ I decided to have a version of this tool on nuget after I used it for several pr
 
 		private void hello()
 		{
+		    // Request the user to provide its name, (with default value 'World'.
 		    var name = this.requestValue("Name", "World");
 
 		    this.WriteLine($"Hello {name}");
@@ -197,35 +220,41 @@ I decided to have a version of this tool on nuget after I used it for several pr
 		    var text = "The quick brown fox jumps over the lazy dog";
 		    var words = text.Split(" ");
 
+		    // Here 'words' are written as a list.
 		    this.WriteList(words, e => e.ToUpper());
 		}
 
 		private void sampleWriteAsTable()
 		{
-		    this.WriteAsTable(people, new Dictionary<string, Func<Person, object>>()
-		    {
-			{ "Fullname", d => $"{d.name} {d.surname}" },
-			{ "Firstname", d => d.name},
-			{ "Surname", d => d.surname},
-			{ "DateOfBirth", d => d.dob.ToShortDateString()},
-			{ "BornInYear", d => d.dob.Year},
-			{ "Age", d => { 
-			    // Calculate the age.
-			    var age = DateTime.Today.Year - d.dob.Year;
+		    this.WriteAsTable(people, 
+		    	// Create a definition how to the table should look like
+		    	new Dictionary<string, Func<Person, object>>()
+		    	{
+				{ "Fullname", d => $"{d.name} {d.surname}" },
+				{ "Firstname", d => d.name},
+				{ "Surname", d => d.surname},
+				{ "DateOfBirth", d => d.dob.ToShortDateString()},
+				{ "BornInYear", d => d.dob.Year},
+				{ "Age", d => { 
+			    		// Calculate the age.
+			    		var age = DateTime.Today.Year - d.dob.Year;
 
-			    // Go back to the year in which the person was born in case of a leap year
-			    return d.dob.Date > DateTime.Today.AddYears(-age)
-				? --age
-				: age;
-			}},
-			{ "BornBfore2010", d => d.dob.Year < 2010 },
-			{ "Place", d => d.city.ToUpper()}
-		    });
+			    		// Go back to the year in which the person was born in case of a leap year
+					return d.dob.Date > DateTime.Today.AddYears(-age)
+					? --age
+					: age;
+				}},
+				{ "BornBfore2010", d => d.dob.Year < 2010 },
+				{ "Place", d => d.city.ToUpper()}
+		    	}
+		    );
 		}
 
 		private void sampleRequestBool()
 		{
 		    this.WriteLine("Are you getting it? ");
+		    
+		    // Ask the user to provide a bool value (True/False)
 		    var understood = this.requestBool();
 
 		    if (understood)
@@ -240,6 +269,7 @@ I decided to have a version of this tool on nuget after I used it for several pr
 
 		private void sampleRequestMonth()
 		{
+		    // Request the use to provide a month
 		    var month = this.requestMonth();
 
 		    var monthName = CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(month);
@@ -249,6 +279,8 @@ I decided to have a version of this tool on nuget after I used it for several pr
 
 		private void sampleRequestFromList()
 		{
+		    // Ask the user to pick an item from the list provided.
+		    // BEWARE: use index value, starts with 0!
 		    var person = this.requestItem(people, p => $"{ p.name } {p.surname} ", "Pick a friend", 1);
 
 		    this.WriteLine($"{person.name} is your new friend.");
@@ -256,7 +288,6 @@ I decided to have a version of this tool on nuget after I used it for several pr
 
 	    }
 	}
-
 
 More information is about to come!
 
