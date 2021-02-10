@@ -111,12 +111,16 @@ namespace ConsoleCommander
                     WriteLine(string.Empty);
                 }
 
-                // Textual commands
-                foreach (var k in commands.Where(c => !c.Value.Item3).Where(c => !Int32.TryParse(c.Key, out _)).OrderBy(c => c.Key))
+                // Check if there are any numeric commands.
+                if (commands.Any(c => !Int32.TryParse(c.Key, out _)))
                 {
-                    WriteLine($" '{k.Key}' : {k.Value.Item1}");
+                    // Textual commands
+                    foreach (var k in commands.Where(c => !c.Value.Item3).Where(c => !Int32.TryParse(c.Key, out _)).OrderBy(c => c.Key))
+                    {
+                        WriteLine($" '{k.Key}' : {k.Value.Item1}");
+                    }
+                    WriteLine(string.Empty);
                 }
-                WriteLine(string.Empty);
 
                 // System commands
                 foreach (var k in commands.Where(c => c.Value.Item3).OrderBy(c => c.Key))
