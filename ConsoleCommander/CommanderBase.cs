@@ -80,6 +80,9 @@ namespace ConsoleCommander
 
         #endregion
 
+        /// <summary>
+        /// Execute the commander.
+        /// </summary>
         public void Run()
         {
             this.OnStart(this, new EventArgs());
@@ -137,9 +140,28 @@ namespace ConsoleCommander
             }
         }
 
+        /// <summary>
+        /// Register a command.
+        /// </summary>
+        /// <param name="command">The command to use.</param>
+        /// <param name="description">The command title/description.</param>
+        /// <param name="action">The action to invoke<./param>
+        /// <param name="systemCommand">Wether the command is typed as a systemCommand.</param>
         protected void registerCommand(string command, string description, Action action, bool systemCommand = false)
         {
             commands.Add(command, new Tuple<string, Action, bool>(description, action, systemCommand));
+        }
+
+        /// <summary>
+        /// Register a command (numeric).
+        /// </summary>
+        /// <param name="command">The command to use.</param>
+        /// <param name="description">The command title/description.</param>
+        /// <param name="action">The action to invoke<./param>
+        /// <param name="systemCommand">Wether the command is typed as a systemCommand.</param>
+        protected void registerCommand(int command, string description, Action action, bool systemCommand = false)
+        {
+            commands.Add(command.ToString(), new Tuple<string, Action, bool>(description, action, systemCommand));
         }
 
         /// <summary>
@@ -153,16 +175,26 @@ namespace ConsoleCommander
             useCommander(commander);
         }
 
+        /// <summary>
+        /// Define the commander to use.
+        /// </summary>
+        /// <param name="commanderToUse"></param>
         protected void useCommander(CommanderBase commanderToUse)
         {
             commanderToUse.Run();
         }
 
+        /// <summary>
+        /// Clear the console screen.
+        /// </summary>
         protected void ClearScreen()
         {
             interactionHelper.Clear();
         }
 
+        /// <summary>
+        /// Stop the command an give the control back to the previous commander or quit application.
+        /// </summary>
         protected void QuitCommander()
         {
             active = false;
@@ -189,6 +221,10 @@ namespace ConsoleCommander
 
         #endregion
 
+        /// <summary>
+        /// Request Input from the input provider.
+        /// </summary>
+        /// <returns></returns>
         internal string GetInput()
         {
             return interactionHelper.ReadLine();
