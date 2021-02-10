@@ -99,22 +99,36 @@ namespace ConsoleCommander
                 WriteLine($"Choose command to invoke: ");
                 WriteLine(string.Empty);
 
-                foreach (var k in commands.Where(c => !c.Value.Item3).OrderBy(c => c.Key))
+                // Check if there are any numeric commands.
+                if (commands.Any(c => Int32.TryParse(c.Key, out _)))
+                {
+                    WriteLine($"Quickstart commands: ", ConsoleColor.White);
+                    // Nummeric Commands
+                    foreach (var k in commands.Where(c => !c.Value.Item3).Where(c => Int32.TryParse(c.Key, out _)).OrderBy(c => c.Key))
+                    {
+                        WriteLine($" {k.Key} : {k.Value.Item1}");
+                    }
+                    WriteLine(string.Empty);
+                }
+
+                // Textual commands
+                foreach (var k in commands.Where(c => !c.Value.Item3).Where(c => !Int32.TryParse(c.Key, out _)).OrderBy(c => c.Key))
                 {
                     WriteLine($" '{k.Key}' : {k.Value.Item1}");
                 }
                 WriteLine(string.Empty);
 
+                // System commands
                 foreach (var k in commands.Where(c => c.Value.Item3).OrderBy(c => c.Key))
                 {
-                    WriteLine($" '{k.Key}' : {k.Value.Item1}");
+                    WriteLine($" '{k.Key}' : {k.Value.Item1}", ConsoleColor.White);
                 }
                 WriteLine(string.Empty);
 
                 #endregion
 
                 Write("Command: ");
-                var command = interactionHelper.ReadLine().ToLower();
+                var command = interactionHelper.ReadLine();
                 WriteLine(string.Empty);
 
                 if (commands.ContainsKey(command))
