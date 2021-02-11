@@ -1,3 +1,5 @@
+[![Build Status](https://dev.azure.com/ConsoleCommander/ConsoleCommander/_apis/build/status/jwijnker.ConsoleCommander?branchName=master)](https://dev.azure.com/ConsoleCommander/ConsoleCommander/_build/latest?definitionId=1&branchName=master)
+
 # ConsoleCommander	
 
 First, thanks for taking a look into ConsoleCommander.
