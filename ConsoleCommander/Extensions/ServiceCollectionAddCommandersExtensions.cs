@@ -21,11 +21,18 @@ namespace ConsoleCommander.Extensions
                     .Where(t => t.IsCommander())
                 ;
 
-                foreach (var type in types)
-                {
-                    Debug.WriteLine($"Register commander '{type.Name}'.");
-                    serviceCollection.AddTransient(type, type);
-                }
+                serviceCollection.AddCommanders(types.ToArray());
+            }
+
+            return serviceCollection;
+        }
+
+        public static IServiceCollection AddCommanders(this IServiceCollection serviceCollection, Type[] commanderTypes)
+        {
+            foreach (var type in commanderTypes.Where(t => t.IsCommander()))
+            {
+                Debug.WriteLine($"Register commander '{type.Name}'.");
+                serviceCollection.AddTransient(type, type);
             }
 
             return serviceCollection;
