@@ -1,4 +1,5 @@
-﻿using ConsoleCommander.Extensions;
+﻿using ConsoleCommander;
+using ConsoleCommander.Extensions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -13,6 +14,8 @@ namespace Core_Console
 {
     class Program : IHostedService
     {
+        private static IConfigurationRoot configuration;
+
         public static void Main(string[] args)
         {
             var builder = new HostBuilder()
@@ -25,6 +28,8 @@ namespace Core_Console
                     config.SetBasePath(Directory.GetCurrentDirectory());
                     config.AddJsonFile("appsettings.json", true);
                     if (args != null) config.AddCommandLine(args);
+                    
+                    configuration = config.Build();
                 })
                 .ConfigureLogging((hostingContext, logging) =>
                 {
@@ -36,8 +41,14 @@ namespace Core_Console
                     // Set the service to be hosted.
                     services.AddHostedService(s => new Program(s));
 
-                    // Register commanders found in given assembly.
-                    services.AddCommanders(typeof(Program).Assembly);
+                    // Set the defaultCommander to use using Provider and register commanders found in given assembly.
+                    
+                    // Use the defined commander in config
+                    services.AddCommanders(new ConfiguredDefaultCommanderProvider(configuration, "defaultCommander"), typeof(Program).Assembly);
+
+                    // You can also define it in code using 'DefinedDefaultCommanderProvider'.
+                    //services.AddCommanders(new DefinedDefaultCommanderProvider(typeof(MainCommander)), typeof(Program).Assembly);
+
                 })
                 ;
 
@@ -57,8 +68,14 @@ namespace Core_Console
         {
             try
             {
-                new MainCommander(_serviceProvider)
+                // 
+                var defaultCommanderType = _serviceProvider.GetService<IDefaultCommanderProvider>()
+                    .GetCommanderType;
+                
+                // Run the defined commander
+                (_serviceProvider.GetService(defaultCommanderType) as CommanderBase)
                     .Run();
+
                 Console.ResetColor();
             }
             catch (Exception e)
