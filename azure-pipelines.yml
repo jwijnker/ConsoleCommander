@@ -32,3 +32,10 @@ steps:
   inputs:
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
+
+# Package a project
+- task: NuGetCommand@2
+  inputs:
+    command: 'pack'
+    packagesToPack: '**/ConsoleCommander.csproj'
+    packDestination: '$(Build.ArtifactStagingDirectory)'
