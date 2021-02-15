@@ -13,12 +13,13 @@ Write results with colors formatted (in a list or table) in a console window.
 Logging is writting to console.</Description>
     <PackageTags>ConsoleCommander, Commander, Console, Color, Logging</PackageTags>
     <PackageLicenseExpression></PackageLicenseExpression>
-    <Version>1.0.7.2</Version>
+    <Version>1.0.8</Version>
     <PackageId>ConsoleCommander</PackageId>
-    <PackageReleaseNotes>Improved registration of Commanders.
-Simplified the registration of commands that are forwarded to other commander.
-Added method to register 'numeric' commands. These are handled as 'QuickCommands' and displayed before the regular commands.</PackageReleaseNotes>
-    <AssemblyVersion>1.0.7.2</AssemblyVersion>
+    <PackageReleaseNotes>Added IDefaultCommanderProvider and 2 implementations DefinedDefaultCommanderProvider by just providing an instance. ConfiguredDefaultCommanderProvider to get the commanderType from config.
+
+Added SamplesCommander and taken the samples from (previous) MainCommander.
+Cleaned MainCommander having only a (forwarder) to SamplesCommander.</PackageReleaseNotes>
+    <AssemblyVersion>1.0.8.0</AssemblyVersion>
     <RepositoryUrl>https://github.com/jwijnker/ConsoleCommander#readme</RepositoryUrl>
     <PackageProjectUrl>https://github.com/jwijnker/ConsoleCommander#readme</PackageProjectUrl>
   </PropertyGroup>

@@ -54,17 +54,5 @@ namespace ConsoleCommander.Extensions
 
             return IsCommander(type.BaseType);
         }
-
-        //public static IServiceCollection SetDefaultCommander(this IServiceCollection serviceCollection, Type defaultCommanderType)
-        //{
-        //    if (!defaultCommanderType.IsCommander())
-        //    {
-        //        throw new ApplicationException($"Type '{defaultCommanderType.Name}' is no Commander.");
-        //    }
-
-        //    serviceCollection.
-
-        //    return serviceCollection.AddTransient(typeof(IDefaultCommander), defaultCommanderType);
-        //}
     }
 }
