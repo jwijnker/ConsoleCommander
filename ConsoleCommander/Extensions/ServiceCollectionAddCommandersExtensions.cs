@@ -8,12 +8,12 @@ namespace ConsoleCommander.Extensions
 {
     public static class ServiceCollectionAddCommandersExtensions
     {
-        public static IServiceCollection AddCommanders(this IServiceCollection serviceCollection, Assembly assembly)
+        public static IServiceCollection AddCommanders(this IServiceCollection serviceCollection, IDefaultCommanderProvider provider, Assembly assembly)
         {
-            return AddCommanders(serviceCollection, new[] { assembly });
+            return serviceCollection.AddCommanders(provider, new[] { assembly });
         }
 
-        public static IServiceCollection AddCommanders(this IServiceCollection serviceCollection, Assembly[] assemblies)
+        public static IServiceCollection AddCommanders(this IServiceCollection serviceCollection, IDefaultCommanderProvider provider, Assembly[] assemblies)
         {
             foreach (var a in assemblies)
             {
@@ -21,14 +21,16 @@ namespace ConsoleCommander.Extensions
                     .Where(t => t.IsCommander())
                 ;
 
-                serviceCollection.AddCommanders(types.ToArray());
+                serviceCollection.AddCommanders(provider, types.ToArray());
             }
 
             return serviceCollection;
         }
 
-        public static IServiceCollection AddCommanders(this IServiceCollection serviceCollection, Type[] commanderTypes)
+        public static IServiceCollection AddCommanders(this IServiceCollection serviceCollection, IDefaultCommanderProvider provider, Type[] commanderTypes)
         {
+            serviceCollection.AddSingleton(provider);
+
             foreach (var type in commanderTypes.Where(t => t.IsCommander()))
             {
                 Debug.WriteLine($"Register commander '{type.Name}'.");
@@ -52,5 +54,17 @@ namespace ConsoleCommander.Extensions
 
             return IsCommander(type.BaseType);
         }
+
+        //public static IServiceCollection SetDefaultCommander(this IServiceCollection serviceCollection, Type defaultCommanderType)
+        //{
+        //    if (!defaultCommanderType.IsCommander())
+        //    {
+        //        throw new ApplicationException($"Type '{defaultCommanderType.Name}' is no Commander.");
+        //    }
+
+        //    serviceCollection.
+
+        //    return serviceCollection.AddTransient(typeof(IDefaultCommander), defaultCommanderType);
+        //}
     }
 }
