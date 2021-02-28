@@ -31,7 +31,7 @@ namespace ConsoleCommander.Extensions
         {
             serviceCollection.AddSingleton(provider);
 
-            foreach (var type in commanderTypes.Where(t => t.IsCommander()))
+            foreach (var type in commanderTypes.Where(t => !t.IsAbstract & t.IsCommander()))
             {
                 Debug.WriteLine($"Register commander '{type.Name}'.");
                 serviceCollection.AddTransient(type, type);
@@ -47,7 +47,8 @@ namespace ConsoleCommander.Extensions
                 return true;
             }
 
-            if (type.BaseType == typeof(object))
+            if (type.BaseType == typeof(object) ||
+                type.BaseType == null)
             {
                 return false;
             }
