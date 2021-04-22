@@ -1,6 +1,6 @@
 ﻿using ConsoleCommander.Helpers;
+using ConsoleCommander.Models;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 
@@ -35,7 +35,7 @@ namespace ConsoleCommander
 
         protected bool active = true;
 
-        protected Dictionary<string, Tuple<string, Action, bool>> commands = new Dictionary<string, Tuple<string, Action, bool>>();
+        internal CommandsContainer commands = new CommandsContainer();
 
         #endregion
 
@@ -100,48 +100,56 @@ namespace ConsoleCommander
                 WriteLine(string.Empty);
 
                 // Check if there are any numeric commands.
-                if (commands.Any(c => Int32.TryParse(c.Key, out _)))
+                if (commands.NumericCommands.Any())
                 {
-                    WriteLine($"Quickstart commands: ", ConsoleColor.White);
-                    // Nummeric Commands
-                    foreach (var k in commands.Where(c => !c.Value.Item3).Where(c => Int32.TryParse(c.Key, out _)).OrderBy(c => c.Key))
+                    // Numeric Commands
+                    //WriteLine($"Quickstart commands: ", ConsoleColor.White);
+
+                    foreach (var nc in commands.NumericCommands)
                     {
-                        WriteLine($" {k.Key} : {k.Value.Item1}");
+                        WriteLine($" {nc.Id} : {nc.Description}");
                     }
                     WriteLine(string.Empty);
                 }
 
-                // Check if there are any numeric commands.
-                if (!commands.Any(c => Int32.TryParse(c.Key, out _)))
+                // Check if there are any string commands.
+                if (commands.StringCommands.Any())
                 {
-                    // Textual commands
-                    foreach (var k in commands.Where(c => !c.Value.Item3).Where(c => !Int32.TryParse(c.Key, out _)).OrderBy(c => c.Key))
+                    // Textual Commands
+                    //WriteLine($"Standard commands: ", ConsoleColor.White);
+
+                    foreach (var dc in commands.StringCommands)
                     {
-                        WriteLine($" '{k.Key}' : {k.Value.Item1}");
+                        WriteLine($" '{dc.Id}' : {dc.Description}");
                     }
                     WriteLine(string.Empty);
                 }
 
-                // System commands
-                foreach (var k in commands.Where(c => c.Value.Item3).OrderBy(c => c.Key))
+                if (commands.SystemCommands.Any())
                 {
-                    WriteLine($" '{k.Key}' : {k.Value.Item1}", ConsoleColor.White);
+                    // System commands
+                    //WriteLine($"System commands: ", ConsoleColor.White);
+                    
+                    foreach (var sc in commands.SystemCommands)
+                    {
+                        WriteLine($" '{sc.Id}' : {sc.Description}", ConsoleColor.White);
+                    }
+                    WriteLine(string.Empty);
                 }
-                WriteLine(string.Empty);
 
                 #endregion
 
                 Write("Command: ");
-                var command = interactionHelper.ReadLine();
+                var commandId = interactionHelper.ReadLine();
                 WriteLine(string.Empty);
 
-                if (commands.ContainsKey(command))
+                if (commands.IsRegistered(commandId))
                 {
                     Stopwatch s = new Stopwatch();
                     s.Start();
                     try
                     {
-                        commands[command].Item2();
+                        commands.GetCommand(commandId).Action();
                     }
                     catch (Exception e)
                     {
@@ -153,7 +161,7 @@ namespace ConsoleCommander
                 }
                 else
                 {
-                    WriteLine($"'{command}' is no command", ConsoleColor.Yellow);
+                    WriteLine($"'{commandId}' is no command", ConsoleColor.Yellow);
                 }
             }
         }
@@ -167,7 +175,17 @@ namespace ConsoleCommander
         /// <param name="systemCommand">Wether the command is typed as a systemCommand.</param>
         protected void registerCommand(string command, string description, Action action, bool systemCommand = false)
         {
-            commands.Add(command, new Tuple<string, Action, bool>(description, action, systemCommand));
+            if (command.Contains(" "))
+            {
+                this.Warning("Spaces ' ' in command are replaced with underscores '_'.");
+                command = command.Replace(" ", "_");
+            }
+
+            commands.Add(
+                systemCommand
+                    ? new SystemCommand(command, description, action)
+                    : new StringCommand(command, description, action)
+                    );
         }
 
         /// <summary>
@@ -177,9 +195,9 @@ namespace ConsoleCommander
         /// <param name="description">The command title/description.</param>
         /// <param name="action">The action to invoke<./param>
         /// <param name="systemCommand">Wether the command is typed as a systemCommand.</param>
-        protected void registerCommand(int command, string description, Action action, bool systemCommand = false)
+        protected void registerCommand(int command, string description, Action action)
         {
-            commands.Add(command.ToString(), new Tuple<string, Action, bool>(description, action, systemCommand));
+            commands.Add(new NumericCommand(command, description, action));
         }
 
         /// <summary>

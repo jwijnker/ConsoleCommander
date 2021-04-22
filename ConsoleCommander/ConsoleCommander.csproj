@@ -13,7 +13,7 @@ Write results with colors formatted (in a list or table) in a console window.
 Logging is writting to console.</Description>
     <PackageTags>ConsoleCommander, Commander, Console, Color, Logging</PackageTags>
     <PackageLicenseExpression></PackageLicenseExpression>
-    <Version>1.0.8</Version>
+    <Version>1.0.8.1</Version>
     <PackageId>ConsoleCommander</PackageId>
     <PackageReleaseNotes>Added IDefaultCommanderProvider and 2 implementations DefinedDefaultCommanderProvider by just providing an instance. ConfiguredDefaultCommanderProvider to get the commanderType from config.
 
