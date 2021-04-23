@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ConsoleCommander.Exceptions;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -6,7 +7,7 @@ using System.Linq;
 namespace ConsoleCommander.Models
 {
     [DebuggerStepThrough]
-    internal class CommandsContainer
+    public class CommandsContainer
     {
         #region Properties
 
@@ -45,7 +46,14 @@ namespace ConsoleCommander.Models
 
         public Command GetCommand(string id)
         {
-            return AllCommands.Single(c => c.Id == id);
+            var command =  AllCommands.SingleOrDefault(c => c.Id == id);
+
+            if (command == null)
+            {
+                throw new CommandNotRegisteredException(id);
+            }
+
+            return command;
         }
     }
 }

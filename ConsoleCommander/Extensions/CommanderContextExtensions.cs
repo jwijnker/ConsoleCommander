@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace ConsoleCommander.Extensions
 {
@@ -8,18 +6,13 @@ namespace ConsoleCommander.Extensions
     {
         #region Properties
 
+        public static IDictionary<string, object> GlobalContext = new Dictionary<string, object>();
         public static IDictionary<CommanderBase, IDictionary<string, object>> Context = new Dictionary<CommanderBase, IDictionary<string, object>>();
 
         #endregion
 
         public static IDictionary<string, object> UseContext(this CommanderBase commander, bool useGlobalContext = false)
         {
-            if (!Context.ContainsKey(null)) // Check for GlobalContext
-            {
-                // Create the Global-context
-                Context.Add(null, new Dictionary<string, object>());
-            }
-
             // Check for commander specific context
             if (!commander.HasContext())
             {

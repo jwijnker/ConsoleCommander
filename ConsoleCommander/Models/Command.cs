@@ -10,6 +10,21 @@ namespace ConsoleCommander.Models
 
         public Command(string id, string description, Action action)
         {
+            if (string.IsNullOrEmpty(id))
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+
+            if (string.IsNullOrEmpty(description))
+            {
+                throw new ArgumentNullException(nameof(description));
+            }
+
+            if (action == null)
+            {
+                throw new ArgumentNullException(nameof(action));
+            }
+
             this.Id = id.Replace(" ", "_"); // Replace spaces for underscores.
             this.Description = description;
             this.Action = action;

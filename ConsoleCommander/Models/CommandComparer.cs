@@ -6,7 +6,7 @@ namespace ConsoleCommander.Models
     {
         public bool Equals(Command x, Command y)
         {
-            return x.Id == y.Id;
+            return x.GetType() == y.GetType() & x.Id == y.Id;
         }
 
         public int GetHashCode(Command obj)
