@@ -39,6 +39,7 @@ steps:
 
 # Package a project
 - task: DotNetCoreCLI@2
+  enabled: false
   inputs:
     command: 'pack'
     packagesToPack: '**/ConsoleCommander.csproj'
