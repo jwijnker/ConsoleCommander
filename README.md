@@ -5,7 +5,9 @@
 First, thanks for taking a look into ConsoleCommander.
 Finally there is some documentation about this cool tool.
 
-I decided to have a version of this tool on nuget after I used it for several projects in (E2E-, Integration-) testing, experimenting and maintenance (executing several tasks repeately) in different environments.
+ConsonseCommander now is available for .Net 6 (Out-of-Support) but available for legacy.
+Now also a .Net 8 version is available.
+
 
 # QuickStart
  1. Create a ConsoleApplication (.Net Core)
@@ -23,7 +25,32 @@ I decided to have a version of this tool on nuget after I used it for several pr
 6. Run the application, and press '1' to start command *hello()*.
 
 ## Sample files
-### Program.cs
+
+### Program.cs - Minimal setup
+>    internal static class Program
+>    {
+>        static void Main(string[] args)
+>        {
+>            // In main, just instantiate a commander and run it.
+>            new MinimalSetupCommander()
+>                .Run();
+>        }
+>    }
+>
+>    public class MinimalSetupCommander : CommanderBase
+>    {
+>        public MinimalSetupCommander()
+>        {
+>            registerCommand(0, "Demo minimal setup", demo);
+>        }
+>
+>        private void demo()
+>        {
+>            this.WriteLine("Completed");
+>        }
+>    }
+
+### Program.cs - As SelfHosted Service with configuration and logging
 
 	using ConsoleCommander;
 	using ConsoleCommander.Extensions;
