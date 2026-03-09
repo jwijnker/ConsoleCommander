@@ -38,8 +38,8 @@ steps:
     configuration: '$(buildConfiguration)'
 
 # Package a project
-- task: NuGetCommand@2
+- task: DotNetCoreCLI@2
   inputs:
     command: 'pack'
     packagesToPack: '**/ConsoleCommander.csproj'
-    packDestination: '$(Build.ArtifactStagingDirectory)'
+    versioningScheme: 'bySemVerBuildNumber'
