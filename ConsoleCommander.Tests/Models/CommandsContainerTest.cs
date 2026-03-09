@@ -1,9 +1,5 @@
 ﻿using ConsoleCommander.Exceptions;
 using ConsoleCommander.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -11,8 +7,8 @@ namespace ConsoleCommander.Tests.Models
 {
     public class CommandsContainerTest : TestBase
     {
-        public CommandsContainerTest(ITestOutputHelper testOutputHelper) 
-            : base(testOutputHelper)
+        public CommandsContainerTest(DefaultTestFixture testFixture, ITestOutputHelper testOutputHelper)
+            : base(testFixture, testOutputHelper)
         {
         }
 

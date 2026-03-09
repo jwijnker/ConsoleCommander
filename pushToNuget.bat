@@ -1,5 +1,7 @@
 @echo off
 
+:: Drop the <project>.nupkg file on this batch script in explorer
+
 set filename=%1
 IF "%filename%"=="" GOTO NOFILE
 

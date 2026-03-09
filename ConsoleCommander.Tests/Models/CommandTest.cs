@@ -7,8 +7,8 @@ namespace ConsoleCommander.Tests.Models
 {
     public class CommandTest : TestBase
     {
-        public CommandTest(ITestOutputHelper testOutputHelper)
-            : base(testOutputHelper)
+        public CommandTest(DefaultTestFixture testFixture, ITestOutputHelper testOutputHelper)
+            : base(testFixture, testOutputHelper)
         {
 
         }
@@ -36,7 +36,7 @@ namespace ConsoleCommander.Tests.Models
             var description = "DESCRIPTION";
 
             // Act
-            var e = Assert.Throws<ArgumentNullException>(() => new StringCommand(id, description, () => { } ));
+            var e = Assert.Throws<ArgumentNullException>(() => new StringCommand(id, description, () => { }));
 
             // Assert
             Assert.Equal("id", e.ParamName);

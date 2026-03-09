@@ -42,6 +42,10 @@ namespace ConsoleCommander.Extensions
 
         public static bool IsCommander(this Type type)
         {
+            if (type is null)
+            {
+                return false;
+            }
             if (type.BaseType == typeof(CommanderBase))
             {
                 return true;

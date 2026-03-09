@@ -1,9 +1,6 @@
 ﻿using ConsoleCommander;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace Sample_Console.Commanders
 {
@@ -26,21 +23,21 @@ namespace Sample_Console.Commanders
 
         private void registerCommanders()
         {
-            var assemblies = new[] { this.GetType().Assembly };
+            var assemblies = new[] { GetType().Assembly };
 
             foreach (var a in assemblies)
             {
                 var types = a.GetTypes()
                     .Where(e => e.DeclaringType != null)
-                    .Where(x => x.IsClass && (x.BaseType.IsAssignableFrom(typeof(CommanderBase)) | x.BaseType.IsAssignableFrom(typeof(CommanderBase<object>))))
+                    .Where(x => x.IsClass && x.BaseType.IsAssignableFrom(typeof(CommanderBase)) | x.BaseType.IsAssignableFrom(typeof(CommanderBase<object>)))
                     .OrderBy(e => e.FullName)
                     .Select(e => e.DeclaringType)
                     .Distinct()
                 ;
 
-                this.WriteAsTable(types, new Dictionary<string, Func<Type, object>>() {
+                this.WriteAsTable(types, new Dictionary<string, Func<Type?, object>>() {
                     { "Name", t => t.FullName },
-                    { "DeclaringType", t => t.DeclaringType?.FullName },
+                    { "DeclaringType", t => t.DeclaringType?.FullName ?? "(Unknon)" },
                     { "BaseType", t => t.BaseType.Name },
                     { "Interfaces", t => string.Join(",", t.GetInterfaces().Select(i => i.Name)) },
                     { "Assg.From Base", t => t.IsAssignableFrom(typeof(CommanderBase)) },

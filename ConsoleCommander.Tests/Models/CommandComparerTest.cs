@@ -1,7 +1,4 @@
 ﻿using ConsoleCommander.Models;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -9,8 +6,8 @@ namespace ConsoleCommander.Tests.Models
 {
     public class CommandComparerTest : TestBase
     {
-        public CommandComparerTest(ITestOutputHelper testOutputHelper) 
-            : base(testOutputHelper)
+        public CommandComparerTest(DefaultTestFixture testFixture, ITestOutputHelper testOutputHelper)
+            : base(testFixture, testOutputHelper)
         {
         }
 

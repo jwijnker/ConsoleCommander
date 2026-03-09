@@ -4,13 +4,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using System;
-using System.IO;
-using System.Threading;
-using System.Threading.Tasks;
 
-
-namespace Core_Console
+namespace Sample_Console
 {
     class Program : IHostedService
     {
@@ -20,7 +15,8 @@ namespace Core_Console
         {
             var builder = new HostBuilder()
 
-                .ConfigureHostConfiguration(config => { 
+                .ConfigureHostConfiguration(config =>
+                {
                     // Set the host configuration.
                 })
                 .ConfigureAppConfiguration((hostingContext, config) =>
@@ -28,7 +24,7 @@ namespace Core_Console
                     config.SetBasePath(Directory.GetCurrentDirectory());
                     config.AddJsonFile("appsettings.json", true);
                     if (args != null) config.AddCommandLine(args);
-                    
+
                     configuration = config.Build();
                 })
                 .ConfigureLogging((hostingContext, logging) =>
@@ -42,7 +38,7 @@ namespace Core_Console
                     services.AddHostedService(s => new Program(s));
 
                     // Set the defaultCommander to use using Provider and register commanders found in given assembly.
-                    
+
                     // Use the defined commander in config
                     services.AddCommanders(new ConfiguredDefaultCommanderProvider(configuration, "defaultCommander"), typeof(Program).Assembly);
 
@@ -71,7 +67,7 @@ namespace Core_Console
                 // 
                 var defaultCommanderType = _serviceProvider.GetService<IDefaultCommanderProvider>()
                     .GetCommanderType;
-                
+
                 // Run the defined commander
                 (_serviceProvider.GetService(defaultCommanderType) as CommanderBase)
                     .Run();

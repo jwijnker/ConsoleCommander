@@ -1,7 +1,4 @@
 ﻿using ConsoleCommander.Extensions;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -9,8 +6,8 @@ namespace ConsoleCommander.Tests.Extensions
 {
     public class CommanderContextExtensionsTest : TestBase
     {
-        public CommanderContextExtensionsTest(ITestOutputHelper testOutputHelper) 
-            : base(testOutputHelper)
+        public CommanderContextExtensionsTest(DefaultTestFixture testFixture, ITestOutputHelper testOutputHelper)
+            : base(testFixture, testOutputHelper)
         {
         }
 
