@@ -1,7 +1,6 @@
 ﻿using ConsoleCommander.Exceptions;
 using ConsoleCommander.Models;
 using Xunit;
-using Xunit.Abstractions;
 
 namespace ConsoleCommander.Tests.Models
 {

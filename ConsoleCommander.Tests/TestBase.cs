@@ -3,7 +3,6 @@ using Microsoft.Extensions.Logging;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Xunit;
-using Xunit.Abstractions;
 
 namespace ConsoleCommander.Tests
 {

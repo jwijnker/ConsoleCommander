@@ -1,6 +1,5 @@
 ﻿using ConsoleCommander.Extensions;
 using Xunit;
-using Xunit.Abstractions;
 
 namespace ConsoleCommander.Tests.Extensions
 {
