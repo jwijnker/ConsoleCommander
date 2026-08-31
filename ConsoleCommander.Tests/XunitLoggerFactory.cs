@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
 using System;
 using System.Diagnostics;
-using Xunit.Abstractions;
+using Xunit;
 
 namespace ConsoleCommander.Tests
 {

@@ -1,7 +1,6 @@
 ﻿using ConsoleCommander.Models;
 using System;
 using Xunit;
-using Xunit.Abstractions;
 
 namespace ConsoleCommander.Tests.Models
 {
