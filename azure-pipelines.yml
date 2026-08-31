@@ -22,17 +22,17 @@ steps:
 
 - task: NuGetToolInstaller@1
 
-- task: NuGetCommand@2
-  displayName: 'Restore NuGet packages'
-  inputs:
-    restoreSolution: '$(solution)'
-
 - task: UseDotNet@2
   displayName: 'Use .NET Core sdk (from global.json)'
   inputs:
     packageType: 'sdk'
     useGlobalJson: true
     checkForExistingVersion: true
+
+- task: NuGetCommand@2
+  displayName: 'Restore NuGet packages'
+  inputs:
+    restoreSolution: '$(solution)'
 
 - task: VSBuild@1
   displayName: 'Build solution'
