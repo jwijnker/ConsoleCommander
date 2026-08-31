@@ -23,16 +23,19 @@ steps:
 - task: NuGetToolInstaller@1
 
 - task: NuGetCommand@2
+  displayName: 'Restore NuGet packages'
   inputs:
     restoreSolution: '$(solution)'
 
 - task: UseDotNet@2
+  displayName: 'Use .NET Core sdk (from global.json)'
   inputs:
     packageType: 'sdk'
     useGlobalJson: true
     checkForExistingVersion: true
 
 - task: VSBuild@1
+  displayName: 'Build solution'
   inputs:
     solution: '$(solution)'
     msbuildArgs: '/p:DeployOnBuild=true /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /p:PackageLocation="$(build.artifactStagingDirectory)"'
@@ -40,12 +43,14 @@ steps:
     configuration: '$(buildConfiguration)'
 
 - task: VSTest@2
+  displayName: 'Run unit tests'
   inputs:
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
 
 # Package a project
 - task: DotNetCoreCLI@2
+  displayName: 'Package project'
   enabled: false
   inputs:
     command: 'pack'
