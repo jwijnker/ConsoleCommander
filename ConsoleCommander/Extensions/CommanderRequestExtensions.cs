@@ -78,6 +78,7 @@ namespace ConsoleCommander
         /// <param name="commander"></param>
         /// <param name="items"></param>
         /// <param name="defaultIdx"></param>
+        /// <exception cref="NotSupportedException">When an index for an item is out of range</exception>
         /// <returns></returns>
         public static T requestItem<T>(this CommanderBase commander, IEnumerable<T> items, Func<T, string> writeFormat, string message = "item", int defaultIdx = 0)
         {
@@ -97,6 +98,12 @@ namespace ConsoleCommander
             }
 
             var selectedItem = commander.requestValue(message, defaultIdx);
+
+            if (selectedItem < 0 || selectedItem >= items.Count())
+            {
+                throw new NotSupportedException("The item requested is not available.");
+            }
+
             return items.ElementAt(selectedItem);
         }
 

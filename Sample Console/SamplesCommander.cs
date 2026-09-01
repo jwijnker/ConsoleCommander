@@ -137,9 +137,16 @@ namespace Sample_Console
 
         private void sampleRequestFromList()
         {
-            var person = this.requestItem(People, p => $"{p.Name} {p.Surname} ", "Pick a friend", 1);
+            try
+            {
+                var person = this.requestItem(People, p => $"{p.Name} {p.Surname} ", "Pick a friend", 1);
 
-            this.WriteLine($"{person.Name} is your new friend.");
+                this.WriteLine($"{person.Name} is your new friend.");
+            }
+            catch (NotSupportedException)
+            {
+                this.Error("Your new friend is not available.");
+            }
         }
 
     }
